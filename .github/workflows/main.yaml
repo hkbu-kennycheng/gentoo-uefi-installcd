@@ -1,0 +1,21 @@
+name: build and push release for x86
+on: push
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Build image
+      uses: docker/build-push-action@v5
+      with:
+        platforms: linux/i386
+        tags: ${{ github.repository }}:latest
+        build-args: |
+          GH_TOKEN=${{ github.token }}
+          REPO=${{ github.repository }}
+          REF=${{ github.ref_name }}
