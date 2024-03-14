@@ -34,5 +34,5 @@ ARG GH_TOKEN
 ARG REPO
 ARG REF
 
-RUN gh repo clone $REPO /git && cd /git && \
+RUN gh repo clone $REPO /git -- -b $REF && cd /git && \
     gh release create $REF --notes "kernel version $KVER" "/boot/${TARGET}#${TARGET}" "/boot/${TARGET}#bootia32.efi"
